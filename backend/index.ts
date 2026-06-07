@@ -19,6 +19,10 @@ app.use(express.json());
 
 const PORT = config.PORT;
 
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/landlord", landlordRouter);
 app.use("/api/v1/tenant", tenantRouter);
