@@ -97,15 +97,7 @@ function Profile() {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-3">
-                <div className="h-10 w-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 border border-slate-100">
-                  <User className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-xs text-slate-400 font-semibold block uppercase">Account ID</span>
-                  <span className="text-xs font-mono text-slate-500 break-all">{admin._id}</span>
-                </div>
-              </div>
+
 
               <div className="flex items-center space-x-3">
                 <div className="h-10 w-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400 border border-slate-100">

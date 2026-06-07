@@ -20,6 +20,8 @@ function TenantPayments() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
+  const hasPendingPayment = payments.some(p => p.status === 'pending');
+
   useEffect(() => {
     fetchPayments();
   }, []);
@@ -62,7 +64,7 @@ function TenantPayments() {
           month: rentMonth ? new Date(rentMonth) : undefined,
           screenshotURL: uploadRes.data.fileUrl
         });
-        
+
         setMessage({ type: 'success', text: 'Payment submitted successfully! Awaiting landlord approval.' });
         setAmount('');
         setRentMonth('');
@@ -86,7 +88,7 @@ function TenantPayments() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Payment Submission Form */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -96,71 +98,88 @@ function TenantPayments() {
                 Submit Rent Payment
               </h3>
             </div>
-            
-            <form onSubmit={handleUpload} className="p-6 space-y-4">
-              {message.text && (
-                <div className={`p-3 rounded-md text-sm flex items-start ${
-                  message.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'
-                }`}>
-                  <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{message.text}</span>
+
+            {hasPendingPayment ? (
+              <div className="p-6 flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center">
+                  <Clock className="w-8 h-8 text-amber-500" />
                 </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Amount (₹)</label>
-                <input
-                  type="number"
-                  required
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  className="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-[#3b82f6] focus:border-[#3b82f6] sm:text-sm"
-                  placeholder="Enter amount"
-                />
+                <div>
+                  <h4 className="text-base font-semibold text-slate-800">Payment Under Review</h4>
+                  <p className="text-sm text-slate-500 mt-1">
+                    You already have a payment pending landlord approval. You cannot submit a new payment until the current one is reviewed.
+                  </p>
+                </div>
+                <div className="w-full p-3 rounded-lg bg-amber-50 border border-amber-200 text-sm text-amber-700 flex items-start">
+                  <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Please wait for your landlord to approve or reject the pending payment before submitting a new one.</span>
+                </div>
               </div>
+            ) : (
+              <form onSubmit={handleUpload} className="p-6 space-y-4">
+                {message.text && (
+                  <div className={`p-3 rounded-md text-sm flex items-start ${message.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'
+                    }`}>
+                    <AlertCircle className="w-4 h-4 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>{message.text}</span>
+                  </div>
+                )}
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Rent Month (Optional)</label>
-                <input
-                  type="month"
-                  value={rentMonth}
-                  onChange={(e) => setRentMonth(e.target.value)}
-                  className="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-[#3b82f6] focus:border-[#3b82f6] sm:text-sm"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Amount (₹)</label>
+                  <input
+                    type="number"
+                    required
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-[#3b82f6] focus:border-[#3b82f6] sm:text-sm"
+                    placeholder="Enter amount"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Payment Screenshot</label>
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md hover:border-[#3b82f6] hover:bg-blue-50 transition-colors">
-                  <div className="space-y-1 text-center">
-                    <UploadCloud className="mx-auto h-12 w-12 text-slate-400" />
-                    <div className="flex text-sm text-slate-600 justify-center">
-                      <label htmlFor="file-upload" className="relative cursor-pointer bg-transparent rounded-md font-medium text-[#3b82f6] hover:text-[#2563eb]">
-                        <span>Upload a file</span>
-                        <input 
-                          id="file-upload" 
-                          name="file-upload" 
-                          type="file" 
-                          className="sr-only" 
-                          accept="image/jpeg, image/png, application/pdf"
-                          onChange={(e) => setFile(e.target.files?.[0] || null)}
-                        />
-                      </label>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Rent Month (Optional)</label>
+                  <input
+                    type="month"
+                    value={rentMonth}
+                    onChange={(e) => setRentMonth(e.target.value)}
+                    className="block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-[#3b82f6] focus:border-[#3b82f6] sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Payment Screenshot</label>
+                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md hover:border-[#3b82f6] hover:bg-blue-50 transition-colors">
+                    <div className="space-y-1 text-center">
+                      <UploadCloud className="mx-auto h-12 w-12 text-slate-400" />
+                      <div className="flex text-sm text-slate-600 justify-center">
+                        <label htmlFor="file-upload" className="relative cursor-pointer bg-transparent rounded-md font-medium text-[#3b82f6] hover:text-[#2563eb]">
+                          <span>Upload a file</span>
+                          <input
+                            id="file-upload"
+                            name="file-upload"
+                            type="file"
+                            className="sr-only"
+                            accept="image/jpeg, image/png, application/pdf"
+                            onChange={(e) => setFile(e.target.files?.[0] || null)}
+                          />
+                        </label>
+                      </div>
+                      <p className="text-xs text-slate-500">PNG, JPG, PDF up to 5MB</p>
+                      {file && <p className="text-sm font-semibold text-[#1e293b] mt-2">{file.name}</p>}
                     </div>
-                    <p className="text-xs text-slate-500">PNG, JPG, PDF up to 5MB</p>
-                    {file && <p className="text-sm font-semibold text-[#1e293b] mt-2">{file.name}</p>}
                   </div>
                 </div>
-              </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1e293b] hover:bg-slate-800 disabled:opacity-50 transition-colors"
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit Payment for Approval'}
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1e293b] hover:bg-slate-800 disabled:opacity-50 transition-colors"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit Payment for Approval'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
@@ -170,7 +189,7 @@ function TenantPayments() {
             <div className="px-6 py-4 border-b border-slate-200">
               <h3 className="text-lg font-semibold text-slate-800">Payment History</h3>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-slate-200">
                 <thead className="bg-[#f8fafc]">
@@ -194,9 +213,9 @@ function TenantPayments() {
                           ₹{payment.amount.toLocaleString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {payment.status === 'approved' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800"><CheckCircle className="w-3.5 h-3.5 mr-1 text-emerald-600"/> Approved</span>}
-                          {payment.status === 'pending' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800"><Clock className="w-3.5 h-3.5 mr-1 text-amber-600"/> Pending</span>}
-                          {payment.status === 'rejected' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800"><XCircle className="w-3.5 h-3.5 mr-1 text-rose-600"/> Rejected</span>}
+                          {payment.status === 'approved' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800"><CheckCircle className="w-3.5 h-3.5 mr-1 text-emerald-600" /> Approved</span>}
+                          {payment.status === 'pending' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800"><Clock className="w-3.5 h-3.5 mr-1 text-amber-600" /> Pending</span>}
+                          {payment.status === 'rejected' && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800"><XCircle className="w-3.5 h-3.5 mr-1 text-rose-600" /> Rejected</span>}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                           {new Date(payment.paymentDate).toLocaleDateString()}

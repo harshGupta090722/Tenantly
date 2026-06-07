@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Backend runs on port 5000 according to index.js
-const API_URL = 'http://localhost:4000/api/v1';
+// Uses VITE_API_URL from environment in production, falls back to localhost for dev
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api/v1';
 
 const api = axios.create({
   baseURL: API_URL,

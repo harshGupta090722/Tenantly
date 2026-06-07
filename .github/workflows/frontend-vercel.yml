@@ -1,25 +1,22 @@
-name: Frontend CI/CD - Vercel
+name: Frontend CI/CD — Vercel
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'rent-tracker-frontend/**'
+    branches: [main]
+    paths: ['frontend/**']
   pull_request:
-    branches:
-      - main
-    paths:
-      - 'rent-tracker-frontend/**'
+    branches: [main]
+    paths: ['frontend/**']
   workflow_dispatch:
 
 defaults:
   run:
-    working-directory: rent-tracker-frontend
+    working-directory: frontend
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,9 +24,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-          cache-dependency-path: rent-tracker-frontend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install Dependencies
         run: npm ci

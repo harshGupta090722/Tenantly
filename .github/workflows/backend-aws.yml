@@ -1,63 +1,37 @@
-name: Backend CI/CD - AWS (EC2 & PM2 via Rsync)
+name: Backend CI/CD — AWS EC2 (Docker)
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'rent-tracker-backend/**'
+    branches: [main]
+    paths: ['backend/**']
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: rent-tracker-backend
-
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Verify TypeScript compiles before deploying
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-          cache-dependency-path: rent-tracker-backend/package-lock.json
+          cache-dependency-path: backend/package-lock.json
 
       - name: Install Dependencies
+        working-directory: backend
         run: npm ci
 
-      - name: Run TypeScript Compile Check
+      - name: TypeScript Compile Check
+        working-directory: backend
         run: npx tsc --noEmit
 
-      - name: Build TypeScript Code
-        run: npm run build
-
-      - name: Copy Files to EC2 via Rsync
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-          EC2_TARGET_DIR: ${{ secrets.EC2_TARGET_DIR || '/home/ubuntu/rent-tracker-backend' }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          
-          # Create remote target directory if it doesn't exist
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $EC2_USERNAME@$EC2_HOST "mkdir -p $EC2_TARGET_DIR"
-          
-          # Sync local dist/ folder and package configs to remote directory efficiently
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa" \
-            dist/ \
-            package.json \
-            package-lock.json \
-            $EC2_USERNAME@$EC2_HOST:$EC2_TARGET_DIR/
-
-      - name: Install Production Deps & Restart PM2 on EC2
+      # Deploy to EC2 via SSH
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -65,13 +39,34 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            cd ${{ secrets.EC2_TARGET_DIR || '/home/ubuntu/rent-tracker-backend' }}
-            
-            # Install only production dependencies (avoids dev dependencies and compiles correctly on target host)
-            npm ci --omit=dev
-            
-            # Zero-downtime reload if PM2 process is running, otherwise start fresh
-            pm2 describe rent-tracker-backend > /dev/null && pm2 reload rent-tracker-backend || pm2 start dist/index.js --name "rent-tracker-backend"
-            
-            # Save the PM2 process list to resurrect on system reboot
-            pm2 save
+            cd ~/SocietyOne
+
+            # Pull latest code
+            git pull origin main
+
+            # Build and restart Docker container
+            cd backend
+            docker build -t societyone-backend .
+
+            # Stop and remove old container (ignore errors if not running)
+            docker stop societyone-backend 2>/dev/null || true
+            docker rm societyone-backend 2>/dev/null || true
+
+            # Run new container with:
+            #   --restart unless-stopped  → auto-restart on crash/reboot
+            #   -v for uploads            → persist uploaded files across rebuilds
+            #   --env-file                → load environment variables
+            docker run -d \
+              --name societyone-backend \
+              --restart unless-stopped \
+              -p 4000:4000 \
+              -v ~/SocietyOne/backend/uploads:/app/uploads \
+              --env-file ~/SocietyOne/backend/.env \
+              societyone-backend
+
+            # Cleanup dangling images to save disk space
+            docker image prune -f
+
+            # Verify container is running
+            sleep 3
+            docker ps | grep societyone-backend

@@ -298,16 +298,7 @@ function TenantProfile() {
             </div>
           </div>
 
-          {/* Account System ID */}
-          <div className="flex items-center space-x-4 p-4 rounded-xl border border-slate-50 hover:bg-slate-50/50 hover:border-slate-100 transition-all duration-200 md:col-span-2">
-            <div className="h-10 w-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-500 border border-slate-100 flex-shrink-0">
-              <Fingerprint className="w-5 h-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">Database Unique ID</span>
-              <span className="text-xs font-mono text-slate-500 break-all select-all block mt-0.5">{profile._id}</span>
-            </div>
-          </div>
+
 
         </div>
       </div>
