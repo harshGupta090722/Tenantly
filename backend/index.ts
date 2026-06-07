@@ -19,8 +19,8 @@ app.use(express.json());
 
 const PORT = config.PORT;
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.get("/api/v1/test", (req, res) => {
+    res.send("Society One is running successfully!");
 });
 
 app.use("/api/v1/auth", authRoutes);
