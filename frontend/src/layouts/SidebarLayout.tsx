@@ -5,18 +5,18 @@ import {
   LayoutDashboard,
   Home,
   Users,
-  PieChart,
   CheckSquare,
   CreditCard,
   FolderOpen,
   Settings,
-  HelpCircle,
   LogOut,
   Building,
   Key,
   PlusCircle,
-  ShieldAlert,
-  AlertCircle
+  AlertCircle,
+  MessageSquareWarning,
+  Bell,
+  ShieldAlert
 } from 'lucide-react';
 import api from '../api';
 
@@ -78,6 +78,8 @@ function SidebarLayout() {
     { name: 'Lease Requests', path: '/landlord/lease-requests', icon: CheckSquare },
     { name: 'Tenants', path: '/landlord/tenants', icon: Users },
     { name: 'Payments', path: '/landlord/payments', icon: CreditCard },
+    { name: 'Complaints', path: '/landlord/complaints', icon: MessageSquareWarning },
+    { name: 'Notifications', path: '/landlord/notifications', icon: Bell },
     { name: 'Documents', path: '/landlord/documents', icon: FolderOpen },
     { name: 'Profile', path: '/landlord/profile', icon: Settings }
   ];
@@ -87,6 +89,8 @@ function SidebarLayout() {
     { name: 'Rent Property', path: '/tenant/rent-property', icon: Building },
     { name: 'My Lease', path: '/tenant/my-lease', icon: Key },
     { name: 'Payments', path: '/tenant/payments', icon: CreditCard },
+    { name: 'Complaints', path: '/tenant/complaints', icon: MessageSquareWarning },
+    { name: 'Notifications', path: '/tenant/notifications', icon: Bell },
     { name: 'Documents', path: '/tenant/documents', icon: FolderOpen },
     { name: 'Profile', path: '/tenant/profile', icon: Settings },
   ];
@@ -96,6 +100,7 @@ function SidebarLayout() {
     { name: 'AllFlats', path: '/admin/flats', icon: Home },
     { name: 'Document Verification', path: '/admin/verifications', icon: CheckSquare },
     { name: 'Leases', path: '/admin/leases', icon: Users },
+    { name: 'Complaints', path: '/admin/complaints', icon: MessageSquareWarning },
     { name: 'All Document', path: '/admin/documents', icon: FolderOpen },
     { name: 'Profile Settings', path: '/admin/profile', icon: Settings },
   ];
@@ -108,7 +113,7 @@ function SidebarLayout() {
       <aside className="w-64 flex-shrink-0 bg-[#1e293b] text-white flex flex-col shadow-xl">
         <div className="h-16 flex items-center px-6 border-b border-white/10">
           <Building className="w-6 h-6 mr-3 text-[#3b82f6]" />
-          <span className="text-lg font-bold tracking-wide">Tenantly</span>
+          <span className="text-lg font-bold tracking-wide">SocietyOne</span>
         </div>
 
         <div className="flex-1 overflow-y-auto py-6">

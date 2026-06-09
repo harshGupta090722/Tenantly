@@ -50,7 +50,7 @@ function Login() {
             <div className="h-12 w-12 bg-[#1e293b] rounded-lg flex items-center justify-center mb-4">
               <Building className="h-6 w-6 text-white" />
             </div>
-            <h2 className="text-2xl font-bold text-[#1e293b] tracking-tight">Tenantly Portal</h2>
+            <h2 className="text-2xl font-bold text-[#1e293b] tracking-tight">SocietyOne Portal</h2>
             <p className="text-sm text-slate-500 mt-2">Sign in to your account</p>
           </div>
 

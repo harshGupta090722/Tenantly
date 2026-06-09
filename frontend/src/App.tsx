@@ -24,6 +24,10 @@ import AdminVerifications from './pages/admin/Verifications';
 import AdminLeases from './pages/admin/Leases';
 import AdminDocuments from './pages/admin/Documents';
 import AdminProfile from './pages/admin/Profile';
+import TenantComplaints from './pages/tenant/Complaints';
+import LandlordComplaints from './pages/landlord/Complaints';
+import AdminComplaints from './pages/admin/Complaints';
+import Notifications from './pages/shared/Notifications';
 import './index.css';
 
 function App() {
@@ -51,6 +55,8 @@ function App() {
             <Route path="lease-requests" element={<LeaseRequests />} />
             <Route path="tenants" element={<TenantDirectory />} />
             <Route path="payments" element={<LandlordPayments />} />
+            <Route path="complaints" element={<LandlordComplaints />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="documents" element={<LandlordDocuments />} />
             <Route path="profile" element={<LandlordProfile />} />
           </Route>
@@ -68,6 +74,8 @@ function App() {
             <Route path="rent-property" element={<RentProperty />} />
             <Route path="my-lease" element={<MyLease />} />
             <Route path="payments" element={<TenantPayments />} />
+            <Route path="complaints" element={<TenantComplaints />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="profile" element={<TenantProfile />} />
             <Route path="documents" element={<div className="p-4 bg-white rounded-lg shadow">Document Vault (Phase 3)</div>} />
             <Route path="support" element={<div className="p-4 bg-white rounded-lg shadow">Support Center (Phase 3)</div>} />
@@ -86,6 +94,7 @@ function App() {
             <Route path="flats" element={<AdminFlats />} />
             <Route path="verifications" element={<AdminVerifications />} />
             <Route path="leases" element={<AdminLeases />} />
+            <Route path="complaints" element={<AdminComplaints />} />
             <Route path="documents" element={<AdminDocuments />} />
             <Route path="profile" element={<AdminProfile />} />
           </Route>

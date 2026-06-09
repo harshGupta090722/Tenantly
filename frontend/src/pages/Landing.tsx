@@ -26,7 +26,7 @@ function Landing() {
             <div className="h-10 w-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-md shadow-slate-900/10 group-hover:scale-105 transition-transform duration-300">
               <Building className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-slate-900 tracking-tight">Tenantly <span className="text-blue-600 font-medium">Portal</span></span>
+            <span className="text-xl font-bold text-slate-900 tracking-tight">SocietyOne <span className="text-blue-600 font-medium">Portal</span></span>
           </div>
 
           <div className="flex items-center space-x-4">
@@ -95,7 +95,7 @@ function Landing() {
               <div className="w-3 h-3 rounded-full bg-yellow-400" />
               <div className="w-3 h-3 rounded-full bg-green-400" />
               <div className="h-4 w-40 bg-slate-100 rounded-md ml-4 text-[10px] text-slate-400 flex items-center justify-center">
-                portal.Tenantly.com
+                portal.SocietyOne.com
               </div>
             </div>
 
@@ -184,7 +184,7 @@ function Landing() {
               Everything you need in a rental ecosystem
             </h2>
             <p className="text-lg text-slate-600">
-              Forget clunky spreadsheets and scattered chats. Tenantly brings structure, verification, and transparency to lease cycles.
+              Forget clunky spreadsheets and scattered chats. SocietyOne brings structure, verification, and transparency to lease cycles.
             </p>
           </div>
 
@@ -266,7 +266,7 @@ function Landing() {
               Designed for both sides of the lease
             </h2>
             <p className="text-lg text-slate-600">
-              Tenantly bridges the communication gap between property managers and residents.
+              SocietyOne bridges the communication gap between property managers and residents.
             </p>
           </div>
 
@@ -374,7 +374,7 @@ function Landing() {
             Ready to upgrade your property experience?
           </h2>
           <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Get started today. Whether you're a landlord managing multiple properties or a tenant trying to log rent receipts, Tenantly Portal has got you covered.
+            Get started today. Whether you're a landlord managing multiple properties or a tenant trying to log rent receipts, SocietyOne Portal has got you covered.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
@@ -398,10 +398,10 @@ function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center space-x-2">
             <Building className="h-4 w-4 text-slate-600" />
-            <span className="text-sm font-bold text-slate-400 tracking-tight">Tenantly Portal</span>
+            <span className="text-sm font-bold text-slate-400 tracking-tight">SocietyOne Portal</span>
           </div>
           <p className="text-xs text-slate-600">
-            &copy; {new Date().getFullYear()} Tenantly. All rights reserved. Built with modern styling & rich user experience.
+            &copy; {new Date().getFullYear()} SocietyOne. All rights reserved. Built with modern styling & rich user experience.
           </p>
         </div>
       </footer>

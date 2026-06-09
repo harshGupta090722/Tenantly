@@ -223,7 +223,7 @@ function LandlordProfile() {
       <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-8 animate-fadeIn">
         <div>
           <h3 className="text-lg font-bold text-slate-800">Account Credentials & Personal Details</h3>
-          <p className="text-xs text-slate-500 mt-1">Official registry details registered on Tenantly platform.</p>
+          <p className="text-xs text-slate-500 mt-1">Official registry details registered on SocietyOne platform.</p>
         </div>
 
         {/* Info Grid */}

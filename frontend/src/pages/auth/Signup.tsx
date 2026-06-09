@@ -46,7 +46,7 @@ function Signup() {
               <Building className="h-6 w-6 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-[#1e293b] tracking-tight">Create Account</h2>
-            <p className="text-sm text-slate-500 mt-2">Join Tenantly today</p>
+            <p className="text-sm text-slate-500 mt-2">Join SocietyOne today</p>
           </div>
 
           {error && (
