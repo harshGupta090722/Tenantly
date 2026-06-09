@@ -7,6 +7,7 @@ import landlordRouter from "./routes/landlordRoute.js";
 import tenantRouter from "./routes/tenantRoute.js";
 import leaseRouter from "./routes/leaseRoute.js";
 import adminRouter from "./routes/adminRoutes.js";
+import complaintRouter from "./routes/complaintRoute.js";
 import cors from "cors";
 
 connectDB();
@@ -28,6 +29,7 @@ app.use("/api/v1/landlord", landlordRouter);
 app.use("/api/v1/tenant", tenantRouter);
 app.use("/api/v1/leases", leaseRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/complaints", complaintRouter);
 app.use("/uploads", express.static("uploads"));
 
 app.listen(PORT, () => {

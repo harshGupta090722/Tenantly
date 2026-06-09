@@ -1,6 +1,6 @@
-# Tenantly - Residential Property Management System 🏢
+# SocietyOne - Residential Property Management System 🏢
 
-Tenantly is a modern, premium full-stack Residential Property Management platform designed to streamline interactions between **Tenants**, **Landlords**, and **Admins**. From flat allocation to rent agreement management, payments tracking, and official document verification, Tenantly makes property management seamless.
+SocietyOne is a modern, premium full-stack Residential Property Management platform designed to streamline interactions between Tenants, Landlords, and Admins. From flat allocation to rent agreement management, payments tracking, and official document verification, SocietyOne makes property management seamless.
 
 > [!NOTE]
 > 🚧 **Project Status: Under Active Development**
